@@ -14,7 +14,7 @@ var app={m:{},v:{},c:{}};
 
 app.c.init=function(){
 	app.m.password=false;
-	app.m.metadata={"name":"Iconic","version":"0.0.2"};
+	app.m.metadata={"name":"Signum Velox","version":"0.0.0"};
 	var b=app.c.bounds();
 	app.m.genome={};
 	app.m.genome.r=[];
@@ -37,7 +37,7 @@ app.c.listeners=function(){
 
 	$("input#clear").on("click",function(){
 		$("div#icons").html("");
-		for (var i=0;i<5;i++){
+		for (var i=0;i<1;i++){
 			var iconWidth=$("input[name=size]:checked").val();
 			iconWidth=parseInt(iconWidth);
 			app.v.icon("div#icons",iconWidth);
@@ -45,16 +45,7 @@ app.c.listeners=function(){
 		}
 	});
 
-/*	
-	$(window).resize(function(){
-		$("body").fadeOut(function(){
-			$("body").html("");
-			app.c.init();
-			app.v.init();
-			$("body").fadeIn();
-		})
-	});
-*/
+
 };
 
 app.c.bounds=function(){	
@@ -75,13 +66,13 @@ app.v.init=function(){
 	app.v.style();
 	var b=app.m.bounds;
 	var d="";
-	d+="<input type='text' value='Iconic'>";
-	d+="<div id='radios'><form actio=''>";
+	d+="<div class='wrapper'><input type='text' value='Velox'></div>";
+	d+="<div id='radios'><form action=''>";
 
 		d+="<table><tr>";
 			d+="<td><input type='radio' name='size' value='1024'><br>1024</td>";
-			d+="<td><input type='radio' name='size' value='512' ><br>512</td>";
-			d+="<td><input type='radio' name='size' value='144' checked><br>144</td>";
+			d+="<td><input type='radio' name='size' value='512' checked><br>512</td>";
+			d+="<td><input type='radio' name='size' value='144' ><br>144</td>";
 			d+="<td><input type='radio' name='size' value='72' ><br>72</td>";
 		d+="</tr></table>";
 	d+="</form></div>";
@@ -96,7 +87,7 @@ app.v.init=function(){
 	var iconWidth=$("input[name=size]:checked").val();
 	iconWidth=parseInt(iconWidth);
 	//console.log(iconWidth);
-	for (var i=0;i<5;i++){
+	for (var i=0;i<1;i++){
 		app.v.icon("div#icons",iconWidth);
 	}
 };
@@ -401,11 +392,13 @@ app.v.style=function(){
 		"margin":"0px",
 		"padding":"0px",
 		"text-align":"center",
-		"background":"#ddd"
+		"background":"#eee"
 	});
 	davis.style("canvas",{
-		"margin":"20px",
-		"cursor":"pointer"
+		"margin":"10px",
+		"cursor":"pointer",
+		"width":"500px",
+		"height":"500px"
 	});
 	davis.style("div",{
 		"text-align":"center",
@@ -415,6 +408,7 @@ app.v.style=function(){
 	davis.style("input[type=text]",{
 		"font-size":"3em",
 		"color":"#111",
+		"width":"100%",
 		"text-align":"center",
 		"margin-top":"30px"
 	});
@@ -436,9 +430,9 @@ app.v.style=function(){
 		"width":"20px",
 		"height":"20px"
 	});
-	davis.style("canvas",{
-		"width":"100px",
-		"height":"100px"
+	davis.style(".wrapper",{
+		"border":"0",
+		"padding":"0"
 	});
 
 };
