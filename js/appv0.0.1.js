@@ -67,6 +67,7 @@ app.v.init=function(){
 	var b=app.m.bounds;
 	var d="";
 	d+="<div class='wrapper'><input type='text' value='Velox'></div>";
+	d+="<p>click more for a new icon. when you find one you like, click it to save. To change the letter, type something new in the box above.</p>";
 	d+="<div id='radios'><form action=''>";
 
 		d+="<table><tr>";
@@ -397,8 +398,8 @@ app.v.style=function(){
 	davis.style("canvas",{
 		"margin":"10px",
 		"cursor":"pointer",
-		"width":"500px",
-		"height":"500px"
+		"width":""+(Math.min(app.m.bounds.right,app.m.bounds.bottom)/3)+"px",
+		"height":""+(Math.min(app.m.bounds.right,app.m.bounds.bottom)/3)+"px"
 	});
 	davis.style("div",{
 		"text-align":"center",
