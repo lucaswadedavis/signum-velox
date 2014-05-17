@@ -93,6 +93,22 @@ mutate:function(x,p){
 	return x;
 },
 
+mutateColor:function(c,p){
+	var c=c||davis.randomColor();
+	var p=p||0.1;
+	c=c.slice(4);
+	c=c.split(",");
+	var c=_.map(c,function(n){
+		var n=parseInt(n);
+		var nn=Math.round(davis.random(2*n*p)-(n*p));
+		n=n+nn;
+		n=Math.max(0,n);
+		n=Math.min(n,255);
+		return n;
+	});
+	return "rgb("+c.join(",")+")"; 
+},
+
 //this takes two arrays - one the source of new material, the other saved material from the past, and decides which to return an element from, then selects a random element from the ancestral or mutational array.
 darwin:function(mutation,ancestry)
 	{

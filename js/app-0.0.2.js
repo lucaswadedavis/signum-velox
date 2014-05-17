@@ -23,7 +23,8 @@ app.c.init=function(){
 	app.m.genome.lw=[];
 	app.m.genome.steps=[];
 	app.m.genome.incrementMod=[];
-	app.m.genome.n=[];
+	app.m.genome.ngonN=[];
+	app.m.genome.ngonR=[];
 	app.m.genome.rotation=[];
 	app.m.genome.fadeColor=[];
 	app.m.genome.fadeRadius=[];
@@ -76,7 +77,16 @@ app.c.opts=function(width,height){
 	opts.width=width;
 	opts.height=height;
 	opts.color=davis.mutateColor(davis.darwin([davis.randomColor()],app.m.genome.color));
+	opts.ngonN=davis.mutate(davis.darwin([davis.randomColor()],app.m.genome.ngonN));
+	opts.ngonR=davis.mutate(davis.darwin([width/4+davis.random(width/4)],app.m.genome.ngonR))
 	return opts;
+};
+
+app.c.breed=function(n){
+	var g=app.m.genome;
+	g.color.push(n.color);
+	g.ngonN.push(n.ngonN);
+	g.ngonR.push(n.ngonR);
 };
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -126,8 +136,7 @@ app.v.icon=function(target,width){
 	$(target).append(c);
 	$("div#icons canvas#"+id).on("click",function(){
 
-		app.m.genome.color.push(opts.color);
-		//if (opts){console.log(opts.color);}
+		app.c.breed(opts);
 
 		$("div#saved").prepend(this);
 
@@ -171,6 +180,8 @@ app.v.textIcon=function(ctx,opts){
 	var width=opts.width || 512;
 	var height=opts.height || 512;
 	var color=opts.color || davis.randomColor();
+	var ngonN=opts.ngonN || 3+davis.random(6);
+	var ngonR=opts.ngonR || width/4+davis.random(width/4);
 
 	ctx.beginPath();
 	var gradient=ctx.createLinearGradient(0,0,0,height);
@@ -220,12 +231,12 @@ app.v.textIcon=function(ctx,opts){
 
 
 	app.v.ngon({
-		n:davis.darwin(3+davis.random(9),app.m.genome.n),
+		n:ngonN,
 		gradient:true,
 		context:ctx,
 		x:width/2,
 		y:height/2,
-		r:width/4+davis.random(width/4),
+		r:ngonR,
 		fill:pattern,
 		lineWidth:davis.random(width/15)
 	});	

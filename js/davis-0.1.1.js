@@ -113,7 +113,7 @@ mutateColor:function(c,p){
 darwin:function(mutation,ancestry)
 	{
 	var anar=ancestry.length;
-	var m=(9*anar*anar)/((anar*anar)+100);
+	var m=(9.9*anar*anar)/((anar*anar)+100);
 	var d=1+this.random(2);
 	if (m>d){ return this.pick(ancestry);}
 	else{ return this.pick(mutation);}
@@ -138,7 +138,7 @@ style:function(selector,values){
 grid:function(xSteps,ySteps,bounds){
 	var grid=[];
 	var b=bounds;
-	console.log(b);
+	//console.log(b);
 	var xInterval=(bounds.right-bounds.left)/xSteps;
 	var yInterval=(bounds.bottom-bounds.top)/ySteps;
 	for (var i=0;i<xSteps;i++){
