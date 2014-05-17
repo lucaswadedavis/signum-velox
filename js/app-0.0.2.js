@@ -71,6 +71,14 @@ app.c.bounds=function(){
 	return b;
 };
 
+app.c.opts=function(width,height){
+	var opts={}
+	opts.width=width;
+	opts.height=height;
+	opts.color=davis.mutateColor(davis.darwin([davis.randomColor()],app.m.genome.color));
+	return opts;
+};
+
 /////////////////////////////////////////////////////////////////////////////////
 
 app.v.layout=function(){
@@ -112,10 +120,14 @@ app.v.icon=function(target,width){
 	var height=width;
 	var target=target || "body";
 	var id=davis.randomWord()+davis.random(100);
+	var opts=app.c.opts(width,height);
+
 	var c=app.v.canvas(width,height,id);
 	$(target).append(c);
 	$("div#icons canvas#"+id).on("click",function(){
-		//app.m.genePool.push(g);
+
+		app.m.genome.color.push(opts.color);
+		//if (opts){console.log(opts.color);}
 
 		$("div#saved").prepend(this);
 
@@ -138,14 +150,14 @@ app.v.icon=function(target,width){
 
 	});
 
-	
+
 	c=document.getElementById(id);
 	var ctx=c.getContext("2d");
 	
-	app.v.radial(ctx,width,height);
+	app.v.radial(ctx,opts);
 	davis.maybe(1,3,function(){	
 		ctx.clearRect(0, 0, width, height);
-		app.v.textIcon(ctx,width,height);
+		app.v.textIcon(ctx,opts);
 	})
 
 	//app.v.textIcon(ctx,width,height);
@@ -155,9 +167,12 @@ app.v.icon=function(target,width){
 };
 
 
-app.v.textIcon=function(ctx,width,height){ctx.beginPath();
+app.v.textIcon=function(ctx,opts){
+	var width=opts.width || 512;
+	var height=opts.height || 512;
+	var color=opts.color || davis.randomColor();
 
-	var color=davis.randomColor();
+	ctx.beginPath();
 	var gradient=ctx.createLinearGradient(0,0,0,height);
 	gradient.addColorStop(0,color);
 	gradient.addColorStop(1,davis.pick([color,davis.randomColor(),"#000","#fff",davis.alpha(color,0)]));
@@ -205,7 +220,7 @@ app.v.textIcon=function(ctx,width,height){ctx.beginPath();
 
 
 	app.v.ngon({
-		n:3+davis.random(9),
+		n:davis.darwin(3+davis.random(9),app.m.genome.n),
 		gradient:true,
 		context:ctx,
 		x:width/2,
@@ -287,7 +302,9 @@ app.v.bilateral=function(ctx,width,height){
 	}
 };
 
-app.v.radial=function(ctx,width,height){
+app.v.radial=function(ctx,opts){
+	var width=opts.width || 512;
+	var height=opts.height || 512;
 	ctx.beginPath();
 	ctx.arc(width/2,width/2,davis.random(width/2),0,2*Math.PI);
 	ctx.strokeStyle=davis.randomColor();
@@ -298,7 +315,7 @@ app.v.radial=function(ctx,width,height){
 	for (var j=0;j<davis.random(4);j++){
 		var r=davis.random(width/2);
 		var rf=davis.random(width/2);
-		var color=davis.randomColor();
+		var color=opts.color || davis.randomColor();
 		davis.maybe(2,3,function(){color=davis.randomColor("grey");});
 		var lw=1+davis.random(width/10);
 		var steps=1+davis.random(30);
